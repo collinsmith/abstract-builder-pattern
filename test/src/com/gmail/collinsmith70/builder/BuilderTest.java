@@ -9,26 +9,28 @@ public class BuilderTest {
   }
 
   @Test
-  public void testConstructors() {
+  public void testSimpleConstructor() {
     BuildableImpl b1 = Buildable.builder(BuildableImpl.Builder::new).build();
+  }
+
+  @Test
+  public void testGenericConstructor() {
     BuildableLinkedList<Integer> b2
         = Buildable.builder(BuildableLinkedList.Builder<Integer>::new).build();
   }
 
   @Test
-  public void testGeneric() {
-    BuildableLinkedList<Integer> b2 = Buildable.builder(BuildableLinkedList.Builder<Integer>::new)
-        .add(1)
-        .add(3)
-        .add(5)
-        .add(7)
-        .add(11)
-        .build();
-    Assert.assertTrue(b2.get(0) == 1);
-    Assert.assertTrue(b2.get(1) == 3);
-    Assert.assertTrue(b2.get(2) == 5);
-    Assert.assertTrue(b2.get(3) == 7);
-    Assert.assertTrue(b2.get(4) == 11);
+  public void testGenericBuilderMethods() {
+    int[] data = { 1, 3, 5, 7, 11 };
+    BuildableLinkedList.Builder<Integer> builder = BuildableLinkedList.builder();
+    for (int i : data) {
+      builder.add(i);
+    }
+
+    BuildableLinkedList<Integer> list = builder.build();
+    for (int i = 0; i < data.length; i++) {
+      Assert.assertTrue(list.get(i) == data[i]);
+    }
   }
 
 }
