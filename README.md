@@ -18,5 +18,5 @@ interface is provided to retrieve Builder instances for a class, and a static ut
 call that static method with arguments specific to the implementing class is a fair workaround.
 
 For example implementations, see:
-- [Person](../test/src/com/gmail/collinsmith70/builder/Person.java)
-- [BuildableLinkedList](../test/src/com/gmail/collinsmith70/builder/BuildableLinkedList.java)
+- [Person](../master/test/src/com/gmail/collinsmith70/builder/Person.java)
+- [BuildableLinkedList](../master/test/src/com/gmail/collinsmith70/builder/BuildableLinkedList.java)
