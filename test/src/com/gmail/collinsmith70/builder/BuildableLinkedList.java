@@ -11,20 +11,28 @@ public class BuildableLinkedList<E> extends LinkedList<E> implements Buildable<B
   public BuildableLinkedList() {
   }
 
+  private BuildableLinkedList(Builder<E> builder) {
+    super(builder.getConstructor());
+  }
+
   @Override
   public Builder<E> get() {
     return new Builder<>();
   }
 
-  public static class Builder<E> extends AbstractBuilder<BuildableLinkedList<E>> {
+  public static class Builder<E> extends AbstractBuilder<BuildableLinkedList<E>, LinkedList<E>> {
+
+    public Builder() {
+      super(LinkedList::new);
+    }
 
     @Override
-    public BuildableLinkedList<E> get() {
-      return new BuildableLinkedList<>();
+    public BuildableLinkedList<E> apply(LinkedList<E> es) {
+      return new BuildableLinkedList<>(this);
     }
 
     public Builder<E> add(E e) {
-      constructing().add(e);
+      getConstructor().add(e);
       return this;
     }
 

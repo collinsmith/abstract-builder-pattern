@@ -1,64 +1,55 @@
 package com.gmail.collinsmith70.builder;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
  * Abstract implementation of a {@link Builder} to make subclassing generic {@code Builder}
  * implementations easier.
  * <br>
- * This implementation uses an instance of {@link T object} to be
- * constructed to store the state, and then returns that object in the
- * {@linkplain #build() terminal} method.
+ * This implementation uses an instance of a {@link C} to be used as a constructor (object to hold
+ * the mutable state), and then has some translational function which can create an instance of
+ * {@link T} using that {@link C} as a template when the object is to be {@link #build() built}.
  * <br>
- * The constructed object can be retrieved using {@link #constructing()}.
+ * The constructing object can be retrieved using {@link #getConstructor()}.
  *
- * @param <T> Type of object to construct
+ * @param <T> {@inheritDoc}
+ * @param <C> Mutable class used to store the state of the object while
+ *            {@linkplain #getConstructor() constructing}
  */
-public abstract class AbstractBuilder<T extends Buildable<T, ? extends Builder<T>>>
-    implements Builder<T> {
+public abstract class AbstractBuilder<T extends Buildable<T, ? extends Builder<T>>, C>
+    implements SimpleBuilder<T>, Function<C, T> {
 
   /**
-   * Instance of the {@linkplain T object} to save the mutable state to while constructing.
+   * Instance of the {@linkplain C constructing} object to save the mutable state to.
    */
-  private T INSTANCE;
+  private C INSTANCE;
 
   /**
-   * Constructs an {@link AbstractBuilder} using the instance
-   * {@linkplain #get() provided by the built-in supplier}.
-   */
-  public AbstractBuilder() {
-    this.INSTANCE = get();
-  }
-
-  /**
-   * Constructs an {@link AbstractBuilder} using the instance provided by the passed
-   * {@link Supplier}.
+   * Constructs an {@link AbstractBuilder} by {@linkplain Supplier supplying} a constructor that
+   * can be used to create a {@linkplain C constructor} instance.
    *
-   * @param supplier {@code Supplier} to generate the mutable state of this {@link Builder}
+   * @param supplier {@code Supplier} used to generate a {@linkplain C constructor} instance
    */
-  public AbstractBuilder(Supplier<T> supplier) {
+  public AbstractBuilder(Supplier<C> supplier) {
     this.INSTANCE = supplier.get();
   }
 
   /**
    * {@inheritDoc}
-   * <br>
-   * Note: This implementation simply returns the same object used to construct the instance.
-   * Modifications to the state of this {@link Builder} after calling this method will be applied
-   * to any and all built instances.
    */
   @Override
   public T build() {
-    return INSTANCE;
+    return apply(INSTANCE);
   }
 
   /**
-   * Returns a reference to the object whose mutable state is used to construct the desired
-   * {@linkplain T object}.
+   * Returns a reference to the {@linkplain C constructor} object whose mutable state is used to
+   * construct an object of the desired type {@link T}.
    *
-   * @return Instance of {@link T} used to set the state of the constructed object.
+   * @return Instance of {@link C} whose mutable state will be used to build a {@link T}
    */
-  protected T constructing() {
+  protected C getConstructor() {
     return INSTANCE;
   }
 

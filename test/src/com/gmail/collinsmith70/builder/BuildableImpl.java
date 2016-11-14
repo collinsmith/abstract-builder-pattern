@@ -13,15 +13,14 @@ public class BuildableImpl implements Buildable<BuildableImpl, BuildableImpl.Bui
   public void test() {
   }
 
-  public static class Builder extends AbstractBuilder<BuildableImpl> {
+  public static class Builder implements SimpleBuilder<BuildableImpl> {
 
     @Override
-    public BuildableImpl get() {
+    public BuildableImpl build() {
       return new BuildableImpl();
     }
 
     public Builder test() {
-      constructing().test();
       return this;
     }
 
