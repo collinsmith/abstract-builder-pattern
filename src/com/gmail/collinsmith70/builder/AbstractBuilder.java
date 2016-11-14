@@ -6,11 +6,11 @@ import java.util.function.Supplier;
 /**
  * Abstract implementation of a {@link Builder} to make subclassing generic {@code Builder}
  * implementations easier.
- * <br>
+ * <p>
  * This implementation uses an instance of a {@link C} to be used as a constructor (object to hold
  * the mutable state), and then has some translational function which can create an instance of
  * {@link T} using that {@link C} as a template when the object is to be {@link #build() built}.
- * <br>
+ * <p>
  * The constructing object can be retrieved using {@link #getConstructor()}.
  *
  * @param <T> {@inheritDoc}
