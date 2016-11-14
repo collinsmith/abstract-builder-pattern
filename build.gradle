@@ -1,10 +1,10 @@
-group 'com.gmail.collinsmith70'
+group 'com.gmail.collinsmith70.builder'
 version '1.0'
 
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
-sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 sourceSets.main.java.srcDirs = ["src"]
 
@@ -21,6 +21,14 @@ sourceSets {
 }
 
 sourceSets.examples.java.srcDirs = ["examples"]
+
+jar {
+    manifest {
+        attributes "Specification-Title": "Java Abstraction of the Builder Pattern",
+                   "Implementation-Title": rootProject.group,
+                   "Implementation-Version": version
+    }
+}
 
 repositories {
     mavenCentral()
