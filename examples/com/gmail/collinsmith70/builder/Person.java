@@ -3,7 +3,7 @@ package com.gmail.collinsmith70.builder;
 public class Person implements Buildable<Person, Person.Builder> {
 
   public static Builder builder() {
-    return Buildable.builder(Person.Builder::new);
+    return Buildable.builder(Builder::new);
   }
 
   private String name;
