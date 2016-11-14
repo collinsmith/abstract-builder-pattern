@@ -4,9 +4,9 @@ This repository contains my attempt at abstracting the [builder design pattern]
 (https://en.wikipedia.org/wiki/Builder_pattern). As a fairly common implementor of the builder
 design pattern, I wanted to try and abstract it to remove at least some of the repetitive and
 often verbose code it entails. In many regards, I would consider this a success, in that I was able
-to abstract at least some of the builder pattern implementation, however it is still fairly verbose.
-That being said, abstracting the builder pattern may have its uses, as implementations could
-actually be polymorphic in nature (e.g., similar to how some libraries allow StringBuilder
+to abstract at least some of the builder pattern implementation process, however it is still fairly
+verbose. That being said, abstracting the builder pattern may have its uses, as implementations
+could actually be polymorphic in nature (e.g., similar to how some libraries allow StringBuilder
 instances where String instances are also accepted), however this was not apart of the design
 process.
 
