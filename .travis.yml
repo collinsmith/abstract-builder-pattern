@@ -5,6 +5,7 @@ jdk:
   - oraclejdk8
 
 script:
+  - git update-index --chmod=+x gradlew
   - ./gradlew clean build
   
 before_cache:
