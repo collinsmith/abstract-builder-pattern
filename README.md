@@ -1,4 +1,5 @@
 # Java Abstraction of the Builder Pattern
+[![Build Status](https://travis-ci.org/collinsmith/abstract-builder-pattern.png)](https://travis-ci.org/collinsmith/abstract-builder-pattern)
 
 This repository contains my attempt at abstracting the [builder design pattern]
 (https://en.wikipedia.org/wiki/Builder_pattern). As a fairly common implementor of the builder
