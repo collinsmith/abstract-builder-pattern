@@ -43,6 +43,6 @@ test {
         events "passed", "skipped", "failed"
         exceptionFormat "short"
 
-        info.events = ["failed", "skipped"]
+        //info.events = ["failed", "skipped"]
     }
 }
