@@ -4,8 +4,10 @@ sudo: false
 jdk:
   - oraclejdk8
 
+before_install:
+ - chmod +x gradlew
+  
 script:
-  - git update-index --chmod=+x gradlew
   - ./gradlew clean build
   
 before_cache:
