@@ -14,7 +14,7 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 before_deploy:
-  - export RELEASE_PKG_FILE=$(ls *.jar)
+  - export RELEASE_JAR_LIBRARY=$(ls *.jar)
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases"
 deploy:
   provider: releases
