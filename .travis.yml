@@ -1,19 +1,29 @@
 language: java
 sudo: false
 jdk:
-- oraclejdk8
+  - oraclejdk8
 before_install:
-- chmod +x gradlew
+  - openssl aes-256-cbc -K $encrypted_fdbb85fd6648_key -iv $encrypted_fdbb85fd6648_iv -in deploy_key.enc -out .ssh/deploy_key -d
+  - chmod +x gradlew
 script:
-- "./gradlew clean build"
+  - "./gradlew clean build"
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
+    - "$HOME/.gradle/caches/"
+    - "$HOME/.gradle/wrapper/"
 before_deploy:
+# Get the deploy key by using Travis's stored variables to decrypt deploy_key.enc
+  - ENCRYPTED_KEY_VAR="encrypted_${ENCRYPTION_LABEL}_key"
+  - ENCRYPTED_IV_VAR="encrypted_${ENCRYPTION_LABEL}_iv"
+  - ENCRYPTED_KEY=${!ENCRYPTED_KEY_VAR}
+  - ENCRYPTED_IV=${!ENCRYPTED_IV_VAR}
+  - openssl aes-256-cbc -K $ENCRYPTED_KEY -iv $ENCRYPTED_IV -in deploy_key.enc -out .ssh/deploy_key -d
+  - chmod 600 deploy_key
+  - eval `ssh-agent -s`
+  - ssh-add deploy_key
   - export RELEASE_JAR_LIBRARY=$(ls build/libs/*.jar)
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases"
   - git config --global user.email "builds@travis-ci.com"
@@ -35,4 +45,7 @@ deploy:
 branches:
   except:
     - /^*-v[0-9]/
+env:
+  global:
+  - ENCRYPTION_LABEL: fdbb85fd6648
 # Z0Y0Fn6JILy8PR67cnyxUJsnSEve/5IFv5DeMQOrxuDED6n5jm+8S3TjTVP5uIZieKXEbuCaE6ySnsjl7/MvPwTthkPS0QMVerV2RrBEB38a0H802LOhLvzwvVM3wUejaIi7YCzdWm5x75+MXMTh0GxYoLjEufPBzZvC9M7rtxXFYUr5AiQ8TZgiISeq38mlLy4dON27SglBZIjTQVumHyf3WufBNzaPqOxgATH0U3ogPlz+UsFsAlgdIHo67s5NAu1k1Za6XHntvA1Mvo9zkbK4cJqRkahHUN3zQ9f8nUt4LpBha24ll6XZLOuPCYKUQvyzhxCfpCpiSLm0vF6xZQp40g1yjiVw52IXRzBRN09MEGeqPIy9Bz47ueilQtQu9UEec+yy2PgZ0S/l51jViY5thkxdtUu+08TiiE0yiYm9nho6c46sOOouzYtz6ycjZVwz0Ene5HAB5n6qwKw6qJawRpkmbRvui6GmKYnfv4YTEv8ONRzwKpjoWqAXiH4tDbUuUXikr3mIf7c0BeBXeWnVmi8oPXZHvuaPaKPJTfTJXvvqltnwtwGkj8o4xy5gU9RYi0LN6zLLDVVcXhRBJd/JZH0BSDG26yBsWjZmS/kAMhSUdJuTZf+Lg1Zz/YcXxc9ea+Q48x5S6EEJA/2B/WJ8AFwyhUF7d7iT97EgyMY=
