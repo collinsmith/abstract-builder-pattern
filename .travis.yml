@@ -26,5 +26,5 @@ deploy:
   overwrite: true
   on:
     repo: collinsmith/abstract-builder-pattern
-    branch: master
+    tags: true
 
