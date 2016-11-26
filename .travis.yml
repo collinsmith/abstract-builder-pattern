@@ -25,12 +25,12 @@ before_deploy:
   #- ssh-add deploy_key
   - export RELEASE_JAR_LIBRARY=$(ls build/libs/*.jar)
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases"
-  - git config --global user.email "builds@travis-ci.com"
-  - git config --global user.name "Travis CI"
-  - export GIT_TAG=$TRAVIS_BRANCH-0.1.$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - git push -q https://collinsmith@github.com/collinsmith/abstract-builder-pattern --tags
-  - ls -R
+  #- git config --global user.email "builds@travis-ci.com"
+  #- git config --global user.name "Travis CI"
+  #- export GIT_TAG=$TRAVIS_BRANCH-0.1.$TRAVIS_BUILD_NUMBER
+  #- git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  #- git push -q https://collinsmith@github.com/collinsmith/abstract-builder-pattern --tags
+  #- ls -R
 deploy:
   provider: releases
   api_key: $OAUTH
