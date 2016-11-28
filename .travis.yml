@@ -18,7 +18,7 @@ before_deploy:
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases"
   # openssl aes-256-cbc -K $encrypted_fdbb85fd6648_key -iv $encrypted_fdbb85fd6648_iv -in deploy_key.enc -out .ssh/deploy_key -d
   - |
-      declare -r SSH_FILE="$(mktemp -u $HOME/.ssh/XXXXX)"
+      declare -r SSH_FILE="$(mktemp -u $HOME/.ssh/deploy_key)"
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -28,7 +28,7 @@ before_deploy:
       openssl aes-256-cbc \
         -K $encrypted_fdbb85fd6648_key \
         -iv $encrypted_fdbb85fd6648_iv \
-        -in ".travis/github_deploy_key.enc" \
+        -in ".travis/deploy_key.enc" \
         -out "$SSH_FILE" -d
 
       # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
