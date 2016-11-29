@@ -24,7 +24,7 @@ before_deploy:
   - git config --global user.email "builds@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  - git push -q https://git@github.com/collinsmith/abstract-builder-pattern --tags
+  - git push -q https://github.com/collinsmith/abstract-builder-pattern --tags
 deploy:
   provider: releases
   api_key:
