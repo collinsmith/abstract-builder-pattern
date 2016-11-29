@@ -18,6 +18,8 @@ before_deploy:
   - chmod 600 github_deploy_key
   - eval `ssh-agent -s`
   - ssh-add github_deploy_key
+  #- export GIT_TAG=build-$TRAVIS_BRANCH-$(date -u "+%Y-%m-%d-%H-%M-%S")-$TRAVIS_BUILD_NUMBER
+  #- git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
   - export RELEASE_JAR_LIBRARY=$(ls build/libs/*.jar)
   - export GIT_TAG=v1.1-SNAPSHOT
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases as $GIT_TAG"
