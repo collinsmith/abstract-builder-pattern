@@ -19,19 +19,15 @@ before_deploy:
   - chmod 600 github_deploy_key
   - eval `ssh-agent -s`
   - ssh-add github_deploy_key
-  #- export GIT_TAG=build-$TRAVIS_BRANCH-$(date -u "+%Y-%m-%d-%H-%M-%S")-$TRAVIS_BUILD_NUMBER
-  #- git tag $GIT_TAG -a -m "Generated tag from TravisCI build $TRAVIS_BUILD_NUMBER"
   - export RELEASE_JAR_LIBRARY=$(ls build/libs/*.jar)
   - export GIT_TAG=${RELEASE_JAR_LIBRARY%.jar}
   - GIT_TAG=${GIT_TAG##*/}
   - GIT_TAG=${GIT_TAG/builder-/v}
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases as $GIT_TAG"
-  #- git remote set-url origin $REPO.git
   - git config --global user.email "builds@travis-ci.org"
   - git config --global user.name "Travis CI"
   - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
   - git push -fq git@github.com:collinsmith/abstract-builder-pattern.git --tags
-  #- git push origin $GIT_TAG > /dev/null 2>&1
 deploy:
   provider: releases
   api_key:
