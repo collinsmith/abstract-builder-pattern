@@ -26,7 +26,7 @@ before_deploy:
   - echo "Deploying $RELEASE_JAR_LIBRARY to GitHub releases as $GIT_TAG"
   - git config --global user.email "builds@travis-ci.org"
   - git config --global user.name "Travis CI"
-  - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git tag $GIT_TAG -a -f -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER. This tag should not be relied upon due to constant forced retags to current build head, and master head should be used instead."
   - git push -fq git@github.com:collinsmith/abstract-builder-pattern.git --tags
 deploy:
   provider: releases
